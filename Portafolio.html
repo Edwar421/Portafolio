@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Fotográfico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #888;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .intro {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1em;
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        .filters {
+            text-align: center;
+            padding: 30px 20px;
+            background: #111;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #222;
+        }
+
+        .category-description {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-left: 4px solid #fff;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .category-description.active {
+            display: block;
+        }
+
+        .category-description h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .category-description p {
+            color: #aaa;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px 25px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 50px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border-radius: 4px;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 30px 20px 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover .photo-info {
+            transform: translateY(0);
+        }
+
+        .photo-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .photo-description {
+            font-size: 0.9em;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        .photo-category {
+            display: inline-block;
+            background: #333;
+            padding: 3px 10px;
+            font-size: 0.75em;
+            margin-top: 8px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+        }
+
+        .lightbox-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .lightbox-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .lightbox-description {
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            padding: 20px;
+            user-select: none;
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #111;
+            border-top: 1px solid #222;
+            margin-top: 50px;
+        }
+
+        footer p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+                letter-spacing: 4px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 30px 15px;
+            }
+
+            .photo-item img {
+                height: 300px;
+            }
+
+            .lightbox-nav {
+                font-size: 30px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MI PORTAFOLIO</h1>
+        <p class="subtitle">Fotografía Semestre 2024</p>
+        <p class="intro">
+            Una colección de momentos capturados durante el semestre. 
+            Cada imagen cuenta una historia única, explorando la luz, la composición y la emoción.
+        </p>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="retrato">Retratos</button>
+        <button class="filter-btn" data-filter="paisaje">Paisajes</button>
+        <button class="filter-btn" data-filter="urbano">Urbano</button>
+        <button class="filter-btn" data-filter="comida">Comida</button>
+        <button class="filter-btn" data-filter="movimiento">Movimiento</button>
+    </div>
+
+    <!-- Descripciones de categorías -->
+    <div class="category-description active" id="desc-all">
+        <h2>Todas las Fotografías</h2>
+        <p>Explora mi colección completa de imágenes capturadas durante el semestre 2024. Cada fotografía representa una exploración única de técnicas, emociones y perspectivas, desde retratos íntimos hasta paisajes expansivos y momentos en movimiento.</p>
+    </div>
+
+    <div class="category-description" id="desc-retrato">
+        <h2>Retratos</h2>
+        <p>Capturando la esencia humana a través del lente. Esta sección explora la conexión entre el fotógrafo y el sujeto, jugando con la iluminación, las expresiones y la profundidad emocional. Cada retrato cuenta una historia silenciosa sobre identidad, personalidad y el momento presente.</p>
+    </div>
+
+    <div class="category-description" id="desc-paisaje">
+        <h2>Paisajes</h2>
+        <p>La naturaleza en su máxima expresión. Desde paisajes naturales hasta escenas urbanas, esta colección celebra la belleza del entorno que nos rodea. Cada imagen busca transmitir la atmósfera, la luz y la majestuosidad de los espacios que exploramos.</p>
+    </div>
+
+    <div class="category-description" id="desc-urbano">
+        <h2>Urbano</h2>
+        <p>La ciudad como lienzo visual. Arquitectura, texturas, geometría y la vida cotidiana se entrelazan en estas composiciones urbanas. Cada fotografía revela la belleza oculta en las estructuras y espacios que habitamos diariamente.</p>
+    </div>
+
+    <div class="category-description" id="desc-comida">
+        <h2>Comida</h2>
+        <p>El arte culinario a través del lente. Fotografía gastronómica que celebra texturas, colores y composiciones. Cada imagen busca despertar no solo el sentido visual, sino también evocar sabores, aromas y la experiencia sensorial completa.</p>
+    </div>
+
+    <div class="category-description" id="desc-movimiento">
+        <h2>Movimiento</h2>
+        <p>Congelando el dinamismo y la energía. Esta sección captura la esencia del movimiento a través de diferentes técnicas: congelación de acción, barrido y captura de movimiento. Cada imagen explora cómo el tiempo y el movimiento se pueden representar en una fracción de segundo.</p>
+    </div>
+
+    <div class="gallery" id="gallery">
+        <!-- RETRATOS -->
+        <div class="photo-item" data-category="retrato">
+            <img src="Retratos/Retrato 1.png" alt="Retrato 1">
+            <div class="photo-info">
+                <div class="photo-title">Miradas que Hablan</div>
+                <div class="photo-description">Retrato íntimo que captura la profundidad emocional a través de la mirada. Juego de luces y sombras que resalta la expresividad del rostro.</div>
+                <span class="photo-category">Retrato</span>
+            </div>
+        </div>
+
+        <div class="photo-item" data-category="retrato">
+            <img src="Retratos/Retrato 2.jpg" alt="Retrato 2">
+            <div class="photo-info">
+                <div class="photo-title">Esencia Natural</div>
+                <div class="photo-description">Exploración de luz natural que envuelve al sujeto, creando una atmósfera serena y contemplativa. Enfoque en la autenticidad del momento.</div>
+                <span class="photo-category">Retrato</span>
+            </div>
+        </div>
+
+        <div class="photo-item" data-category="retrato">
+            <img src="Retratos/Retrato 3.jpg" alt="Retrato 3">
+            <div class="photo-info">
+                <div class="photo-title">Conexión Humana</div>
+                <div class="photo-description">Retrato que revela personalidad y carácter. Composición equilibrada que guía la mirada hacia la expresión genuina del sujeto.</div>
+                <span class="photo-category">Retrato</span>
+            </div>
+        </div>
+
+        <!-- PAISAJES -->
+        <div class="photo-item" data-category="paisaje">
+            <img src="Paisajes/Natural 1.jpg" alt="Paisaje Natural">
+            <div class="photo-info">
+                <div class="photo-title">Horizontes Naturales</div>
+                <div class="photo-description">Paisaje que captura la inmensidad de la naturaleza. Composición que balancea cielo y tierra, transmitiendo paz y amplitud espacial.</div>
+                <span class="photo-category">Paisaje</span>
+            </div>
+        </div>
+
+        <!-- URBANO -->
+        <div class="photo-item" data-category="urbano">
+            <img src="Paisajes/Urbano 1.jpg" alt="Paisaje Urbano">
+            <div class="photo-info">
+                <div class="photo-title">Geometría Urbana</div>
+                <div class="photo-description">Paisaje urbano que explora líneas, formas y texturas arquitectónicas. La ciudad como un ecosistema visual de estructura y diseño.</div>
+                <span class="photo-category">Urbano</span>
+            </div>
+        </div>
+
+        <!-- COMIDA -->
+        <div class="photo-item" data-category="comida">
+            <img src="Comida/Cafe y Chocorramo.png" alt="Café y Chocorramo">
+            <div class="photo-info">
+                <div class="photo-title">Ritual Colombiano</div>
+                <div class="photo-description">Composición gastronómica que celebra la cultura del café colombiano. Juego de texturas y contrastes que evocan el aroma y sabor del momento.</div>
+                <span class="photo-category">Comida</span>
+            </div>
+        </div>
+
+        <!-- MOVIMIENTO -->
+        <div class="photo-item" data-category="movimiento">
+            <img src="Movimiento/Cap Movi 1.jpg" alt="Captura de Movimiento 1">
+            <div class="photo-info">
+                <div class="photo-title">Instante Congelado</div>
+                <div class="photo-description">Técnica de alta velocidad que congela el movimiento en su punto máximo. Exploración de la acción y la energía capturada en una fracción de segundo.</div>
+                <span class="photo-category">Movimiento</span>
+            </div>
+        </div>
+
+        <div class="photo-item" data-category="movimiento">
+            <img src="Movimiento/Cap Movi 2.jpg" alt="Captura de Movimiento 2">
+            <div class="photo-info">
+                <div class="photo-title">Dinamismo Puro</div>
+                <div class="photo-description">Captura que revela el flujo y la energía del movimiento. Composición dinámica que transmite velocidad y vitalidad.</div>
+                <span class="photo-category">Movimiento</span>
+            </div>
+        </div>
+
+        <div class="photo-item" data-category="movimiento">
+            <img src="Movimiento/Cong Movi 1.jpg" alt="Congelamiento de Movimiento">
+            <div class="photo-info">
+                <div class="photo-title">Entre el Tiempo</div>
+                <div class="photo-description">Experimentación con el tiempo de exposición para crear efectos visuales únicos. Balance entre nitidez y desenfoque que sugiere movimiento continuo.</div>
+                <span class="photo-category">Movimiento</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-nav prev" onclick="changeImage(-1)">&#10094;</span>
+        <span class="lightbox-nav next" onclick="changeImage(1)">&#10095;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+            <div class="lightbox-info">
+                <div class="lightbox-title" id="lightbox-title"></div>
+                <div class="lightbox-description" id="lightbox-description"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 - Portafolio Fotográfico | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const photoItems = document.querySelectorAll('.photo-item');
+        const categoryDescriptions = document.querySelectorAll('.category-description');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                // Hide all category descriptions
+                categoryDescriptions.forEach(desc => desc.classList.remove('active'));
+
+                // Show selected category description
+                const descId = `desc-${filter}`;
+                const selectedDesc = document.getElementById(descId);
+                if (selectedDesc) {
+                    selectedDesc.classList.add('active');
+                }
+
+                photoItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Lightbox functionality
+        let currentIndex = 0;
+        const photos = Array.from(photoItems);
+
+        photoItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                openLightbox(item);
+            });
+        });
+
+        function openLightbox(item) {
+            const lightbox = document.getElementById('lightbox');
+            const img = item.querySelector('img');
+            const title = item.querySelector('.photo-title').textContent;
+            const description = item.querySelector('.photo-description').textContent;
+
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox-title').textContent = title;
+            document.getElementById('lightbox-description').textContent = description;
+
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeImage(direction) {
+            const visiblePhotos = photos.filter(item => item.style.display !== 'none');
+            currentIndex += direction;
+
+            if (currentIndex >= visiblePhotos.length) {
+                currentIndex = 0;
+            } else if (currentIndex < 0) {
+                currentIndex = visiblePhotos.length - 1;
+            }
+
+            openLightbox(visiblePhotos[currentIndex]);
+        }
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                changeImage(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeImage(1);
+            }
+        });
+
+        // Close lightbox when clicking outside the image
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
