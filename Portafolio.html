@@ -24,6 +24,71 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
         }
 
+        /* About Section */
+        .about-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            padding: 80px 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-photo {
+            position: relative;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 2px solid #333;
+        }
+
+        .about-content h2 {
+            font-size: 2.5em;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .about-content p {
+            color: #aaa;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        @media (max-width: 992px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-photo img {
+                height: 400px;
+            }
+
+            .about-content {
+                text-align: center;
+            }
+
+            .about-content p {
+                text-align: center;
+            }
+        }
+
         h1 {
             font-size: 3em;
             font-weight: 300;
@@ -187,6 +252,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 40px;
         }
 
         .lightbox.active {
@@ -194,31 +260,76 @@
         }
 
         .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            max-width: 95%;
+            max-height: 90vh;
         }
 
-        .lightbox-content img {
+        .lightbox-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 60%;
+        }
+
+        .lightbox-image-container img {
             max-width: 100%;
             max-height: 85vh;
             object-fit: contain;
+            border-radius: 8px;
         }
 
-        .lightbox-info {
-            text-align: center;
-            margin-top: 20px;
+        .lightbox-details {
+            flex: 0 0 400px;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .lightbox-details::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lightbox-details::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .lightbox-details::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
         }
 
         .lightbox-title {
-            font-size: 1.5em;
-            margin-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .lightbox-category {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 5px 15px;
+            font-size: 0.8em;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .lightbox-description {
             color: #aaa;
-            max-width: 600px;
-            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.05em;
         }
 
         .close-lightbox {
@@ -279,6 +390,22 @@
                 height: 300px;
             }
 
+            .lightbox-content {
+                flex-direction: column;
+                max-width: 95%;
+                padding: 20px;
+            }
+
+            .lightbox-image-container {
+                max-width: 100%;
+            }
+
+            .lightbox-details {
+                flex: 1;
+                max-width: 100%;
+                padding: 25px;
+            }
+
             .lightbox-nav {
                 font-size: 30px;
                 padding: 10px;
@@ -289,12 +416,37 @@
 <body>
     <header>
         <h1>MI PORTAFOLIO</h1>
-        <p class="subtitle">Fotografía Semestre 2024</p>
+        <p class="subtitle">Fotografía Semestre 2025-3</p>
         <p class="intro">
             Una colección de momentos capturados durante el semestre. 
             Cada imagen cuenta una historia única, explorando la luz, la composición y la emoción.
         </p>
     </header>
+
+    <!-- Sección Sobre Mí -->
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-photo">
+                <img src="Mi foto/Mi Foto.jpg" alt="Mi Foto">
+            </div>
+            <div class="about-content">
+                <h2>Sobre Mí</h2>
+                <p>
+                    Mi nombre es Edwar Vargas, tengo 22 años y estudiante de ingenieria de Sistemas.
+                    Mi portafolio se centra en capturar la esencia de los momentos cotidianos y transformarlos en arte visual.
+                </p>
+                <p>
+                    Desde retratos íntimos que revelan la profundidad del alma humana, hasta paisajes que celebran la 
+                    majestuosidad de nuestro entorno, cada fotografía representa un aprendizaje, una experimentación y 
+                    una búsqueda constante de la perfección técnica y artística.
+                </p>
+                <p>
+                    Creo en el poder de la imagen para comunicar emociones, provocar reflexión 
+                    y capturar la belleza efímera que nos rodea en cada instante.
+                </p>
+            </div>
+        </div>
+    </section>
 
     <div class="filters">
         <button class="filter-btn active" data-filter="all">Todas</button>
@@ -308,32 +460,32 @@
     <!-- Descripciones de categorías -->
     <div class="category-description active" id="desc-all">
         <h2>Todas las Fotografías</h2>
-        <p>Explora mi colección completa de imágenes capturadas durante el semestre 2024. Cada fotografía representa una exploración única de técnicas, emociones y perspectivas, desde retratos íntimos hasta paisajes expansivos y momentos en movimiento.</p>
+        <p>Explora mi colección completa de imágenes capturadas durante el semestre 2024. Esta galería representa un viaje fotográfico integral que abarca múltiples géneros y técnicas. Cada fotografía es el resultado de una exploración única de luz, composición, color y narrativa visual. Desde retratos íntimos que revelan la complejidad de la naturaleza humana, hasta paisajes expansivos que celebran la grandeza de nuestro entorno, pasando por momentos congelados en el tiempo que capturan la esencia pura del movimiento. Esta colección es un testimonio de mi evolución como fotógrafo, donde cada imagen representa un experimento, un descubrimiento y una búsqueda constante de expresión artística a través del medio fotográfico.</p>
     </div>
 
     <div class="category-description" id="desc-retrato">
         <h2>Retratos</h2>
-        <p>Capturando la esencia humana a través del lente. Esta sección explora la conexión entre el fotógrafo y el sujeto, jugando con la iluminación, las expresiones y la profundidad emocional. Cada retrato cuenta una historia silenciosa sobre identidad, personalidad y el momento presente.</p>
+        <p>La fotografía de retrato es el arte de capturar la esencia humana a través del lente. Esta sección explora la profunda conexión entre el fotógrafo y el sujeto, creando un diálogo visual que trasciende las palabras. Cada retrato es una investigación de identidad, personalidad y emoción, donde la iluminación se convierte en pincel y las sombras en poesía. Trabajo con luz natural y artificial para esculpir rostros, revelando texturas, expresiones y esa chispa intangible que hace única a cada persona. Los retratos aquí presentados no son solo representaciones físicas, sino ventanas al alma, momentos congelados de vulnerabilidad, fortaleza, alegría o contemplación. Cada fotografía cuenta una historia silenciosa sobre quién es el sujeto, capturando no solo su apariencia, sino su presencia, su energía y su humanidad en su forma más auténtica.</p>
     </div>
 
     <div class="category-description" id="desc-paisaje">
         <h2>Paisajes</h2>
-        <p>La naturaleza en su máxima expresión. Desde paisajes naturales hasta escenas urbanas, esta colección celebra la belleza del entorno que nos rodea. Cada imagen busca transmitir la atmósfera, la luz y la majestuosidad de los espacios que exploramos.</p>
+        <p>La fotografía de paisaje celebra la majestuosidad del mundo natural que nos rodea. Esta colección es una exploración de espacios, horizontes y la interacción entre luz y tierra. Cada imagen busca transmitir no solo la belleza visual de un lugar, sino también su atmósfera, su carácter y la emoción que evoca. Desde amaneceres dorados que pintan el cielo con tonos cálidos, hasta paisajes minimalistas donde la composición y el espacio negativo crean un impacto visual poderoso. Trabajo con diferentes condiciones de luz natural, explorando cómo la hora del día, las estaciones y el clima transforman completamente un mismo escenario. La fotografía de paisaje requiere paciencia, planificación y una conexión profunda con el entorno, esperando el momento perfecto donde todos los elementos – luz, composición, color – se alinean para crear una imagen que transporta al espectador a ese lugar y momento específico.</p>
     </div>
 
     <div class="category-description" id="desc-urbano">
         <h2>Urbano</h2>
-        <p>La ciudad como lienzo visual. Arquitectura, texturas, geometría y la vida cotidiana se entrelazan en estas composiciones urbanas. Cada fotografía revela la belleza oculta en las estructuras y espacios que habitamos diariamente.</p>
+        <p>La fotografía urbana transforma la ciudad en un lienzo visual infinito. Esta sección explora la arquitectura, las texturas, la geometría y las líneas que definen nuestros espacios urbanos. Cada fotografía revela la belleza oculta en las estructuras que habitamos diariamente, pero que rara vez detenemos a observar con detenimiento. Trabajo con perspectivas únicas, ángulos dramáticos y composiciones geométricas que destacan patrones, simetrías y contrastes. La ciudad es un organismo vivo lleno de historias visuales: desde la monumentalidad de edificios modernos con sus fachadas de vidrio y acero, hasta los detalles íntimos de calles antiguas con su arquitectura desgastada por el tiempo. La luz urbana – natural y artificial – juega un papel crucial, creando sombras dramáticas durante el día y transformando la ciudad en un espectáculo de luces por la noche. Esta fotografía urbana busca hacer que el espectador vea su ciudad con nuevos ojos, apreciando la estética en lo cotidiano.</p>
     </div>
 
     <div class="category-description" id="desc-comida">
         <h2>Comida</h2>
-        <p>El arte culinario a través del lente. Fotografía gastronómica que celebra texturas, colores y composiciones. Cada imagen busca despertar no solo el sentido visual, sino también evocar sabores, aromas y la experiencia sensorial completa.</p>
+        <p>La fotografía gastronómica es el arte de celebrar la comida como sujeto visual y sensorial. Esta sección va más allá de simplemente documentar platillos; busca despertar los sentidos y evocar experiencias completas. Cada imagen es cuidadosamente compuesta para resaltar texturas, colores vibrantes, y la naturaleza apetitosa de los alimentos. Trabajo con luz natural suave que acaricia las superficies, creando reflejos y sombras que añaden dimensión y profundidad. La composición es fundamental: desde la elección del ángulo (cenital, tres cuartos, o frontal) hasta la selección de props, fondos y superficies que complementan sin distraer. La fotografía de comida cuenta historias culturales y emocionales – un café matutino evoca ritual y confort, una hamburguesa jugosa representa indulgencia y satisfacción. Cada elemento en el encuadre tiene un propósito: crear una narrativa visual que no solo muestre cómo se ve la comida, sino que transmita cómo sabe, huele y se siente. Es una invitación visual a la experiencia gastronómica completa.</p>
     </div>
 
     <div class="category-description" id="desc-movimiento">
         <h2>Movimiento</h2>
-        <p>Congelando el dinamismo y la energía. Esta sección captura la esencia del movimiento a través de diferentes técnicas: congelación de acción, barrido y captura de movimiento. Cada imagen explora cómo el tiempo y el movimiento se pueden representar en una fracción de segundo.</p>
+        <p>La fotografía de movimiento es una exploración fascinante de cómo capturar el dinamismo y la energía en una imagen estática. Esta sección presenta diferentes técnicas para representar el movimiento: desde la congelación de alta velocidad que detiene la acción en su momento más dramático, hasta el motion blur intencional que sugiere fluidez y continuidad. Cada técnica requiere un dominio preciso de la velocidad de obturación, la anticipación del momento decisivo y una comprensión de cómo el movimiento se traduce visualmente. Las imágenes de movimiento congelado revelan detalles imperceptibles al ojo humano – gotas suspendidas en el aire, gestos atléticos en su punto máximo de extensión, momentos efímeros de acción pura. Por otro lado, las técnicas de panning y barrido crean efectos artísticos donde el sujeto mantiene nitidez mientras el fondo se desdibuja, transmitiendo velocidad y dirección. Esta exploración del movimiento representa uno de los aspectos más técnicos y creativos de la fotografía, donde la física de la luz y el tiempo se encuentran con la visión artística para crear imágenes que capturan la esencia misma de la acción y la vida en constante flujo.</p>
     </div>
 
     <div class="gallery" id="gallery">
@@ -395,6 +547,24 @@
             </div>
         </div>
 
+        <div class="photo-item" data-category="comida">
+            <img src="Comida/Hamburguesa.png" alt="Hamburguesa">
+            <div class="photo-info">
+                <div class="photo-title">Indulgencia Perfecta</div>
+                <div class="photo-description">Fotografía gastronómica que captura la textura jugosa y los colores vibrantes de una hamburguesa artesanal. Composición que despierta el apetito y celebra el placer culinario.</div>
+                <span class="photo-category">Comida</span>
+            </div>
+        </div>
+
+        <div class="photo-item" data-category="comida">
+            <img src="Comida/Coca Cola.png" alt="Coca Cola">
+            <div class="photo-info">
+                <div class="photo-title">Refresco Icónico</div>
+                <div class="photo-description">Captura minimalista que juega con reflejos, condensación y el reconocible color rojo. Fotografía de producto que transforma lo cotidiano en arte visual.</div>
+                <span class="photo-category">Comida</span>
+            </div>
+        </div>
+
         <!-- MOVIMIENTO -->
         <div class="photo-item" data-category="movimiento">
             <img src="Movimiento/Cap Movi 1.jpg" alt="Captura de Movimiento 1">
@@ -430,16 +600,19 @@
         <span class="lightbox-nav prev" onclick="changeImage(-1)">&#10094;</span>
         <span class="lightbox-nav next" onclick="changeImage(1)">&#10095;</span>
         <div class="lightbox-content">
-            <img id="lightbox-img" src="" alt="">
-            <div class="lightbox-info">
+            <div class="lightbox-image-container">
+                <img id="lightbox-img" src="" alt="">
+            </div>
+            <div class="lightbox-details">
                 <div class="lightbox-title" id="lightbox-title"></div>
+                <span class="lightbox-category" id="lightbox-category"></span>
                 <div class="lightbox-description" id="lightbox-description"></div>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 - Portafolio Fotográfico | Todos los derechos reservados</p>
+        <p>&copy; 2025 - Portafolio Fotográfico | Todos los derechos reservados</p>
     </footer>
 
     <script>
@@ -500,10 +673,12 @@
             const img = item.querySelector('img');
             const title = item.querySelector('.photo-title').textContent;
             const description = item.querySelector('.photo-description').textContent;
+            const category = item.querySelector('.photo-category').textContent;
 
             document.getElementById('lightbox-img').src = img.src;
             document.getElementById('lightbox-title').textContent = title;
             document.getElementById('lightbox-description').textContent = description;
+            document.getElementById('lightbox-category').textContent = category;
 
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
